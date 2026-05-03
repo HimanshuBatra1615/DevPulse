@@ -34,7 +34,7 @@ export default function Layout({ children }) {
         className="flex-1 min-h-screen transition-all duration-300"
       >
         <Topbar />
-        <div className="p-6">
+        <div className="p-10 lg:p-14">
           {children}
         </div>
       </main>
