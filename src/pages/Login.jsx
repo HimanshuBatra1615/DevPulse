@@ -68,13 +68,13 @@ export default function Login() {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {mode === 'register' && (
               <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
                 <label className="text-xs font-medium text-text-secondary mb-1.5 block">Username</label>
                 <div className="relative">
-                  <User className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted" />
-                  <input value={username} onChange={(e) => setUsername(e.target.value)} className="input-field pl-10" placeholder="johndoe" />
+                  <User className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-text-muted" />
+                  <input value={username} onChange={(e) => setUsername(e.target.value)} className="input-field" style={{ paddingLeft: '3rem' }} placeholder="johndoe" />
                 </div>
               </motion.div>
             )}
@@ -82,18 +82,18 @@ export default function Login() {
             <div>
               <label className="text-xs font-medium text-text-secondary mb-1.5 block">Email</label>
               <div className="relative">
-                <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted" />
-                <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" className="input-field pl-10" placeholder="you@example.com" />
+                <Mail className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-text-muted" />
+                <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" className="input-field" style={{ paddingLeft: '3rem' }} placeholder="you@example.com" />
               </div>
             </div>
 
             <div>
               <label className="text-xs font-medium text-text-secondary mb-1.5 block">Password</label>
               <div className="relative">
-                <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted" />
-                <input value={password} onChange={(e) => setPassword(e.target.value)} type={showPw ? 'text' : 'password'} className="input-field pl-10 pr-10" placeholder="••••••••" />
-                <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-secondary">
-                  {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                <Lock className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-text-muted" />
+                <input value={password} onChange={(e) => setPassword(e.target.value)} type={showPw ? 'text' : 'password'} className="input-field pr-12" style={{ paddingLeft: '3rem' }} placeholder="••••••••" />
+                <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-secondary">
+                  {showPw ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
             </div>

@@ -1,5 +1,4 @@
 import { NavLink, useLocation } from 'react-router-dom'
-import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard,
@@ -25,8 +24,7 @@ const navItems = [
   { path: '/settings', label: 'Settings', icon: Settings },
 ]
 
-export default function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false)
+export default function Sidebar({ collapsed, setCollapsed }) {
   const location = useLocation()
   const { user, logout } = useAuthStore()
   const { activeSession } = useSessionStore()
@@ -115,7 +113,7 @@ export default function Sidebar() {
       <div className="border-t border-white/[0.06] px-4 py-4">
         {!collapsed ? (
           <div className="flex items-center gap-3 px-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
               {user?.username?.charAt(0).toUpperCase() || 'U'}
             </div>
             <div className="flex-1 min-w-0">
