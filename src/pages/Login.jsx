@@ -10,9 +10,16 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
   const [showPw, setShowPw] = useState(false)
-  const { login, loginWithGithub } = useAuthStore()
+  const { login, register, loginWithGithub, error, isLoading } = useAuthStore()
 
-  const handleSubmit = (e) => { e.preventDefault(); login(email, password) }
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (mode === 'login') {
+      await login(email, password)
+    } else {
+      await register(username, email, password)
+    }
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
@@ -69,6 +76,11 @@ export default function Login() {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
+            {error && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-3 bg-accent-danger/10 border border-accent-danger/20 rounded-lg text-accent-danger text-xs text-center font-medium">
+                {error}
+              </motion.div>
+            )}
             {mode === 'register' && (
               <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
                 <label className="text-xs font-medium text-text-secondary mb-1.5 block">Username</label>
@@ -102,9 +114,9 @@ export default function Login() {
               <div className="flex justify-end"><button type="button" className="text-xs text-accent-primary hover:text-accent-primary-hover transition-colors">Forgot password?</button></div>
             )}
 
-            <button type="submit" className="btn-primary w-full justify-center py-3">
-              {mode === 'login' ? 'Sign In' : 'Create Account'}
-              <ArrowRight className="w-4 h-4" />
+            <button type="submit" disabled={isLoading} className="btn-primary w-full justify-center py-3 disabled:opacity-50">
+              {isLoading ? 'Processing...' : (mode === 'login' ? 'Sign In' : 'Create Account')}
+              {!isLoading && <ArrowRight className="w-4 h-4" />}
             </button>
           </form>
         </div>
