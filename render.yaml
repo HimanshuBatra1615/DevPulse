@@ -40,7 +40,6 @@ services:
   # React Frontend (Static Site)
   - type: web
     name: devpulse-frontend
-    plan: free
     runtime: static
     buildCommand: npm ci && npm run build
     staticPublishPath: dist
