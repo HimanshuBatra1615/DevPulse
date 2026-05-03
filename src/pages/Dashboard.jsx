@@ -58,7 +58,7 @@ function StartSessionModal({ onClose, onStart }) {
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
-        className="glass-card p-6 w-full max-w-md"
+        className="glass-card p-8 w-full max-w-md"
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
@@ -66,7 +66,7 @@ function StartSessionModal({ onClose, onStart }) {
           Start New Session
         </h3>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           <div>
             <label className="text-xs font-medium text-text-secondary mb-1.5 block">Project</label>
             <select value={project} onChange={(e) => setProject(e.target.value)} className="input-field bg-bg-card">
@@ -90,7 +90,7 @@ function StartSessionModal({ onClose, onStart }) {
           </div>
         </div>
 
-        <div className="flex gap-3 mt-6">
+        <div className="flex gap-4 mt-8">
           <button onClick={onClose} className="btn-ghost flex-1">Cancel</button>
           <button onClick={() => { onStart(project, language, notes); onClose() }} className="btn-primary flex-1">
             <Play className="w-4 h-4" />
@@ -112,7 +112,7 @@ function LiveTimerWidget() {
     return (
       <>
         <motion.div
-          className="glass-card p-6 relative overflow-hidden group cursor-pointer"
+          className="glass-card p-8 relative overflow-hidden group cursor-pointer"
           onClick={() => setShowModal(true)}
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.99 }}
@@ -120,8 +120,8 @@ function LiveTimerWidget() {
           <div className="absolute inset-0 bg-gradient-to-br from-accent-primary/5 to-accent-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
           <div className="flex items-center justify-between relative z-10">
             <div>
-              <p className="text-sm text-text-secondary mb-1">No active session</p>
-              <p className="text-3xl font-bold font-mono text-text-muted">00:00:00</p>
+              <p className="text-base text-text-secondary mb-2">No active session</p>
+              <p className="text-4xl font-bold font-mono text-text-muted">00:00:00</p>
             </div>
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center shadow-lg shadow-accent-primary/20">
               <Play className="w-6 h-6 text-white ml-0.5" />
@@ -138,7 +138,7 @@ function LiveTimerWidget() {
 
   return (
     <motion.div
-      className="glass-card p-6 relative overflow-hidden pulse-live"
+      className="glass-card p-8 relative overflow-hidden pulse-live h-full flex flex-col justify-center"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
     >
@@ -154,14 +154,14 @@ function LiveTimerWidget() {
           <span className="badge badge-cyan ml-auto">{activeSession.projectTag}</span>
         </div>
 
-        <p className="text-4xl font-bold font-mono text-text-primary tracking-wider mb-1">
+        <p className="text-5xl font-bold font-mono text-text-primary tracking-wider mb-2">
           {formatTime(elapsedSeconds)}
         </p>
-        <p className="text-xs text-text-muted mb-4">
+        <p className="text-sm text-text-muted mb-6">
           {activeSession.language} · Started {format(new Date(activeSession.startedAt), 'h:mm a')}
         </p>
 
-        <div className="flex gap-2">
+        <div className="flex gap-4 mt-auto">
           {isPaused ? (
             <button onClick={resumeSession} className="btn-success flex-1">
               <Play className="w-4 h-4" /> Resume
@@ -193,7 +193,7 @@ function StatsCard({ icon: Icon, label, value, suffix, color, delay = 0 }) {
 
   return (
     <motion.div
-      className="glass-card p-5 stat-card"
+      className="glass-card p-6 stat-card"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: delay * 0.1 }}
@@ -201,14 +201,14 @@ function StatsCard({ icon: Icon, label, value, suffix, color, delay = 0 }) {
     >
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-xs font-medium text-text-muted uppercase tracking-wider">{label}</p>
-          <p className="text-2xl font-bold mt-1.5 font-mono text-text-primary">
+          <p className="text-sm font-medium text-text-muted uppercase tracking-wider">{label}</p>
+          <p className="text-3xl font-bold mt-2 font-mono text-text-primary">
             <AnimatedNumber value={value} />
-            {suffix && <span className="text-sm font-normal text-text-secondary ml-1">{suffix}</span>}
+            {suffix && <span className="text-base font-normal text-text-secondary ml-1">{suffix}</span>}
           </p>
         </div>
-        <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${colorClasses[color]} flex items-center justify-center`}>
-          <Icon className="w-5 h-5" />
+        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${colorClasses[color]} flex items-center justify-center`}>
+          <Icon className="w-6 h-6" />
         </div>
       </div>
     </motion.div>
@@ -251,15 +251,15 @@ export default function Dashboard() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="space-y-6 max-w-[1400px]"
+      className="space-y-10 max-w-[1400px] px-2 py-4"
     >
       {/* Welcome Section */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-text-primary">
+          <h1 className="text-3xl font-bold text-text-primary">
             Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 17 ? 'afternoon' : 'evening'} 👋
           </h1>
-          <p className="text-sm text-text-secondary mt-1">Here's your productivity snapshot for today</p>
+          <p className="text-base text-text-secondary mt-2">Here's your productivity snapshot for today</p>
         </div>
         <Link to="/insights" className="btn-ghost text-xs">
           <Sparkles className="w-3.5 h-3.5" />
@@ -269,14 +269,14 @@ export default function Dashboard() {
       </div>
 
       {/* Top Row: Timer + Stats */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Live Timer — spans 5 cols */}
         <div className="lg:col-span-5">
           <LiveTimerWidget />
         </div>
 
         {/* Stats Grid — spans 7 cols */}
-        <div className="lg:col-span-7 grid grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="lg:col-span-7 grid grid-cols-2 xl:grid-cols-3 gap-6">
           <StatsCard icon={Clock} label="Today's Hours" value={Math.round(todayHours * 10) / 10} suffix="hrs" color="cyan" delay={1} />
           <StatsCard icon={TrendingUp} label="This Week" value={Math.round(weekHours * 10) / 10} suffix="hrs" color="indigo" delay={2} />
           <StatsCard icon={Target} label="Tasks Done" value={completedTasks} suffix={`/ ${tasks.length}`} color="success" delay={3} />
@@ -287,31 +287,31 @@ export default function Dashboard() {
       </div>
 
       {/* Bottom Row: Recent Sessions + Tasks Due + AI Pulse */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Recent Sessions */}
         <motion.div
-          className="glass-card p-5 lg:col-span-1"
+          className="glass-card p-6 lg:col-span-1"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-text-primary">Recent Sessions</h3>
-            <Link to="/sessions" className="text-xs text-accent-primary hover:text-accent-primary-hover transition-colors flex items-center gap-1">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-base font-semibold text-text-primary">Recent Sessions</h3>
+            <Link to="/sessions" className="text-sm text-accent-primary hover:text-accent-primary-hover transition-colors flex items-center gap-1">
               View All <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
-          <div className="space-y-2.5">
+          <div className="space-y-4">
             {recentSessions.map((s) => (
               <div key={s.id} className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/[0.03] transition-colors">
-                <div className="w-8 h-8 rounded-lg bg-accent-primary/10 flex items-center justify-center">
-                  <Code2 className="w-4 h-4 text-accent-primary" />
+                <div className="w-10 h-10 rounded-lg bg-accent-primary/10 flex items-center justify-center">
+                  <Code2 className="w-5 h-5 text-accent-primary" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-text-primary truncate">{s.projectTag}</p>
-                  <p className="text-xs text-text-muted">{s.language} · {s.durationMins}m</p>
+                  <p className="text-base font-medium text-text-primary truncate">{s.projectTag}</p>
+                  <p className="text-sm text-text-muted">{s.language} · {s.durationMins}m</p>
                 </div>
-                <span className="text-xs text-text-muted font-mono">
+                <span className="text-sm text-text-muted font-mono">
                   {format(new Date(s.startedAt), 'MMM d')}
                 </span>
               </div>
@@ -324,29 +324,29 @@ export default function Dashboard() {
 
         {/* Tasks Due */}
         <motion.div
-          className="glass-card p-5 lg:col-span-1"
+          className="glass-card p-6 lg:col-span-1"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-text-primary">In Progress</h3>
-            <Link to="/tasks" className="text-xs text-accent-primary hover:text-accent-primary-hover transition-colors flex items-center gap-1">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-base font-semibold text-text-primary">In Progress</h3>
+            <Link to="/tasks" className="text-sm text-accent-primary hover:text-accent-primary-hover transition-colors flex items-center gap-1">
               View All <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
-          <div className="space-y-2.5">
+          <div className="space-y-4">
             {[...inProgressTasks, ...todoTasks].slice(0, 5).map((t) => {
               const priorityColors = { 1: 'badge-danger', 2: 'badge-warning', 3: 'badge-indigo', 4: 'badge-cyan', 5: 'badge-success' }
               const priorityLabels = { 1: 'P1', 2: 'P2', 3: 'P3', 4: 'P4', 5: 'P5' }
               return (
                 <div key={t.id} className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/[0.03] transition-colors">
                   <span className={`badge ${priorityColors[t.priority]}`}>{priorityLabels[t.priority]}</span>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-text-primary truncate">{t.title}</p>
-                    <p className="text-xs text-text-muted">{t.projectTag}</p>
+                  <div className="flex-1 min-w-0 ml-2">
+                    <p className="text-base font-medium text-text-primary truncate">{t.title}</p>
+                    <p className="text-sm text-text-muted">{t.projectTag}</p>
                   </div>
-                  <span className={`badge text-[10px] ${t.status === 'IN_PROGRESS' ? 'badge-warning' : 'badge-indigo'}`}>
+                  <span className={`badge text-xs ${t.status === 'IN_PROGRESS' ? 'badge-warning' : 'badge-indigo'}`}>
                     {t.status === 'IN_PROGRESS' ? 'WIP' : 'TODO'}
                   </span>
                 </div>
@@ -357,24 +357,24 @@ export default function Dashboard() {
 
         {/* AI Pulse Card */}
         <motion.div
-          className="glass-card p-5 lg:col-span-1 relative overflow-hidden"
+          className="glass-card p-6 lg:col-span-1 relative overflow-hidden"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-accent-secondary/5 to-accent-primary/5" />
           <div className="relative z-10">
-            <div className="flex items-center gap-2 mb-4">
-              <Brain className="w-4 h-4 text-accent-secondary" />
-              <h3 className="text-sm font-semibold text-text-primary">AI Pulse</h3>
-              <span className="badge badge-indigo text-[10px] ml-auto">LIVE</span>
+            <div className="flex items-center gap-3 mb-6">
+              <Brain className="w-5 h-5 text-accent-secondary" />
+              <h3 className="text-base font-semibold text-text-primary">AI Pulse</h3>
+              <span className="badge badge-indigo text-xs ml-auto">LIVE</span>
             </div>
 
             {/* Focus Score */}
-            <div className="mb-4 p-3 rounded-xl bg-white/[0.03] border border-white/[0.04]">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs text-text-secondary">Focus Score</span>
-                <span className={`text-lg font-bold font-mono ${
+            <div className="mb-6 p-4 rounded-xl bg-white/[0.03] border border-white/[0.04]">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm text-text-secondary">Focus Score</span>
+                <span className={`text-2xl font-bold font-mono ${
                   typeof focusScore === 'number' && focusScore >= 75 ? 'text-accent-success' : 
                   typeof focusScore === 'number' && focusScore >= 55 ? 'text-accent-warning' : 'text-accent-danger'
                 }`}>{focusScore}</span>
@@ -390,22 +390,22 @@ export default function Dashboard() {
             </div>
 
             {/* Burnout Risk */}
-            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.04]">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-text-secondary">Burnout Risk</span>
-                <span className={`badge text-[10px] ${
+            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.04]">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm text-text-secondary">Burnout Risk</span>
+                <span className={`badge text-xs ${
                   burnoutLevel === 'LOW' ? 'badge-success' :
                   burnoutLevel === 'MODERATE' ? 'badge-warning' :
                   burnoutLevel === 'HIGH' ? 'badge-danger' : 'badge-danger'
                 }`}>{burnoutLevel}</span>
               </div>
-              <p className="text-xs text-text-muted mt-1">
+              <p className="text-sm text-text-muted mt-2 leading-relaxed">
                 {burnoutRisk?.recommendations?.[0] || 'Analyzing your patterns...'}
               </p>
             </div>
 
-            <Link to="/insights" className="flex items-center justify-center gap-1.5 mt-4 text-xs text-accent-primary hover:text-accent-primary-hover transition-colors">
-              <Sparkles className="w-3 h-3" />
+            <Link to="/insights" className="flex items-center justify-center gap-2 mt-6 text-sm text-accent-primary hover:text-accent-primary-hover transition-colors">
+              <Sparkles className="w-4 h-4" />
               View Full AI Report
             </Link>
           </div>

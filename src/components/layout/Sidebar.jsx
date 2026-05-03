@@ -34,9 +34,9 @@ export default function Sidebar() {
   return (
     <aside className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
       {/* Logo */}
-      <div className="flex items-center gap-3 px-5 py-5 border-b border-white/[0.06]">
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] flex items-center justify-center flex-shrink-0">
-          <Zap className="w-5 h-5 text-white" />
+      <div className="flex items-center gap-3 px-6 py-6 border-b border-white/[0.06]">
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] flex items-center justify-center flex-shrink-0">
+          <Zap className="w-6 h-6 text-white" />
         </div>
         <AnimatePresence>
           {!collapsed && (
@@ -46,7 +46,7 @@ export default function Sidebar() {
               exit={{ opacity: 0, width: 0 }}
               className="overflow-hidden"
             >
-              <h1 className="text-lg font-bold tracking-tight whitespace-nowrap">
+              <h1 className="text-xl font-bold tracking-tight whitespace-nowrap">
                 <span className="gradient-text">Dev</span>
                 <span className="text-text-primary">Pulse</span>
               </h1>
@@ -62,7 +62,7 @@ export default function Sidebar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="mx-3 mt-3 px-3 py-2.5 rounded-xl bg-accent-success/10 border border-accent-success/20"
+            className="mx-4 mt-6 px-4 py-3 rounded-xl bg-accent-success/10 border border-accent-success/20"
           >
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-accent-success pulse-dot" />
@@ -82,7 +82,7 @@ export default function Sidebar() {
       </AnimatePresence>
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+      <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
         {navItems.map((item) => (
           <NavLink
             key={item.path}
@@ -91,7 +91,7 @@ export default function Sidebar() {
               `sidebar-nav-item ${isActive ? 'active' : ''} ${collapsed ? 'justify-center px-3' : ''}`
             }
           >
-            <item.icon className="w-[18px] h-[18px] flex-shrink-0" />
+            <item.icon className="w-5 h-5 flex-shrink-0" />
             <AnimatePresence>
               {!collapsed && (
                 <motion.span
@@ -112,15 +112,15 @@ export default function Sidebar() {
       </nav>
 
       {/* User Section */}
-      <div className="border-t border-white/[0.06] px-3 py-3">
+      <div className="border-t border-white/[0.06] px-4 py-4">
         {!collapsed ? (
           <div className="flex items-center gap-3 px-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
               {user?.username?.charAt(0).toUpperCase() || 'U'}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-text-primary truncate">{user?.username}</p>
-              <p className="text-xs text-text-muted truncate">{user?.email}</p>
+              <p className="text-base font-medium text-text-primary truncate">{user?.username}</p>
+              <p className="text-sm text-text-muted truncate">{user?.email}</p>
             </div>
             <button onClick={logout} className="p-1.5 rounded-lg hover:bg-white/[0.06] text-text-muted hover:text-text-secondary transition-colors" title="Logout">
               <LogOut className="w-4 h-4" />

@@ -22,20 +22,20 @@ export default function Topbar() {
   const focusColor = focusPrediction?.score >= 75 ? 'text-accent-success' : focusPrediction?.score >= 55 ? 'text-accent-warning' : 'text-accent-danger'
 
   return (
-    <header className="h-16 flex items-center justify-between px-6 border-b border-white/[0.06] bg-bg-primary/80 backdrop-blur-xl sticky top-0 z-30">
+    <header className="h-20 flex items-center justify-between px-8 border-b border-white/[0.06] bg-bg-primary/80 backdrop-blur-xl sticky top-0 z-30">
       {/* Page Title */}
       <div>
-        <h2 className="text-lg font-semibold text-text-primary">{pageName}</h2>
-        <p className="text-xs text-text-muted mt-0.5">
+        <h2 className="text-xl font-bold text-text-primary">{pageName}</h2>
+        <p className="text-sm text-text-muted mt-1">
           {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
         </p>
       </div>
 
       {/* Right Section */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
         {/* Focus Score Mini Badge */}
         {focusPrediction && (
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06]">
             <Sparkles className={`w-3.5 h-3.5 ${focusColor}`} />
             <span className="text-xs text-text-secondary">Focus</span>
             <span className={`text-sm font-bold font-mono ${focusColor}`}>{focusScore}</span>
@@ -45,7 +45,7 @@ export default function Topbar() {
         {/* Search */}
         <button
           onClick={() => setSearchOpen(true)}
-          className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.12] text-text-muted hover:text-text-secondary transition-all text-xs"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.12] text-text-muted hover:text-text-secondary transition-all text-sm"
         >
           <Search className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">Search</span>
@@ -55,9 +55,9 @@ export default function Topbar() {
         </button>
 
         {/* Notifications */}
-        <button className="relative p-2 rounded-xl hover:bg-white/[0.06] text-text-muted hover:text-text-secondary transition-colors">
-          <Bell className="w-4.5 h-4.5" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-accent-danger" />
+        <button className="relative p-2.5 rounded-xl hover:bg-white/[0.06] text-text-muted hover:text-text-secondary transition-colors">
+          <Bell className="w-5 h-5" />
+          <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-accent-danger" />
         </button>
       </div>
     </header>
