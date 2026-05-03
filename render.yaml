@@ -1,0 +1,53 @@
+services:
+  # Spring Boot Backend
+  - type: web
+    name: devpulse-backend
+    runtime: docker
+    dockerfilePath: devpulse-backend/Dockerfile
+    dockerContext: devpulse-backend
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: devpulse-db
+          property: connectionSL
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: devpulse-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: devpulse-db
+          property: password
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
+      - key: ML_SERVICE_URL
+        fromService:
+          name: devpulse-ml
+          type: web
+          property: hostport
+      - key: JWT_SECRET
+        generateValue: true
+
+  # Python ML Microservice
+  - type: web
+    name: devpulse-ml
+    runtime: docker
+    dockerfilePath: devpulse-ml/Dockerfile
+    dockerContext: devpulse-ml
+
+  # React Frontend (Static Site)
+  - type: web
+    name: devpulse-frontend
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+databases:
+  - name: devpulse-db
+    plan: free
+    databaseName: devpulse
+    user: devpulse

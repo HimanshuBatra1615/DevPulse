@@ -1,0 +1,74 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: devpulse-backend
+
+  # H2 for dev, PostgreSQL for prod
+  datasource:
+    url: jdbc:h2:mem:devpulse;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+
+  flyway:
+    enabled: false  # Using JPA auto-ddl for dev
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 5000
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${GITHUB_CLIENT_ID:mock-client-id}
+            client-secret: ${GITHUB_CLIENT_SECRET:mock-client-secret}
+            scope: user:email,read:user
+
+# JWT Configuration
+jwt:
+  secret: ${JWT_SECRET:devpulse-super-secret-key-that-is-at-least-256-bits-long-for-hs256}
+  access-token-expiration: 900000     # 15 minutes
+  refresh-token-expiration: 604800000 # 7 days
+
+# ML Service
+ml:
+  service:
+    url: ${ML_SERVICE_URL:http://localhost:8000}
+
+# Swagger
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+
+# CORS
+cors:
+  allowed-origins: http://localhost:3000,http://localhost:5173
+
+logging:
+  level:
+    com.devpulse: DEBUG
+    org.springframework.security: INFO
