@@ -4,7 +4,7 @@ WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 ENV MAVEN_OPTS="-Xmx256m"
-RUN mvn package -DskipTests -B
+RUN mvn package -e -DskipTests -B
 
 # Runtime stage
 FROM eclipse-temurin:17-jre-alpine
