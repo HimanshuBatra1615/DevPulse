@@ -2,6 +2,7 @@ services:
   # Spring Boot Backend
   - type: web
     name: devpulse-backend
+    plan: free
     runtime: docker
     dockerfilePath: devpulse-backend/Dockerfile
     dockerContext: devpulse-backend
@@ -31,6 +32,7 @@ services:
   # Python ML Microservice
   - type: web
     name: devpulse-ml
+    plan: free
     runtime: docker
     dockerfilePath: devpulse-ml/Dockerfile
     dockerContext: devpulse-ml
@@ -38,6 +40,7 @@ services:
   # React Frontend (Static Site)
   - type: web
     name: devpulse-frontend
+    plan: free
     runtime: static
     buildCommand: npm ci && npm run build
     staticPublishPath: dist
