@@ -338,7 +338,6 @@ body {
   transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 12px;
 }
 .btn-primary:hover {
@@ -363,7 +362,6 @@ body {
   transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 12px;
 }
 .btn-ghost:hover {
@@ -385,7 +383,6 @@ body {
   transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 12px;
 }
 .btn-danger:hover {
@@ -406,7 +403,6 @@ body {
   transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 12px;
 }
 .btn-success:hover {

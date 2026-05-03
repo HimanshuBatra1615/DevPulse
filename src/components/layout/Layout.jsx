@@ -29,7 +29,10 @@ export default function Layout({ children }) {
 
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
-      <main className={`flex-1 min-h-screen transition-all duration-300 ${collapsed ? 'ml-[72px]' : 'ml-[260px]'}`}>
+      <main 
+        style={{ marginLeft: collapsed ? '72px' : '260px' }} 
+        className="flex-1 min-h-screen transition-all duration-300"
+      >
         <Topbar />
         <div className="p-6">
           {children}
