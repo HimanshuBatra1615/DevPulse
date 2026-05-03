@@ -147,14 +147,6 @@ docker compose up --build    # Everything at once
 | GET | `/api/insights/peak-hours` | Peak productivity heatmap |
 | GET | `/api/admin/stats` | Admin platform stats |
 
-## 📝 Resume Bullet Templates
-
-> Fill in your actual numbers once deployed:
-
-- Architected a full-stack developer productivity platform with **Spring Boot 3** REST APIs, **JWT + GitHub OAuth2** authentication, **WebSocket** real-time session tracking, and **Redis** caching — deployed on Render via Docker.
-- Engineered an **event-sourced** session logging system with RBAC using Spring Security, reducing dashboard query latency by ~**X%** via Redis TTL caching on aggregate stats.
-- Built a **Python FastAPI ML microservice** integrated with the Spring Boot backend to predict developer focus scores and detect burnout risk using personalised regression models on session time-series data.
-- Developed a React + Recharts analytics dashboard with a **GitHub-style contribution heatmap**, real-time WebSocket timer, and AI Insights panel surfacing ML predictions to end users.
 
 ## 📄 License
 
