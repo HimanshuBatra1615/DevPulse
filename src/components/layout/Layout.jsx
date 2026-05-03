@@ -7,19 +7,21 @@ import { useTaskStore } from '../../store/taskStore'
 
 export default function Layout({ children }) {
   const [collapsed, setCollapsed] = useState(false)
-  const loadMockSessions = useSessionStore((s) => s.loadMockSessions)
+  const fetchSessions = useSessionStore((s) => s.fetchSessions)
   const sessions = useSessionStore((s) => s.sessions)
   const fetchInsights = useInsightsStore((s) => s.fetchInsights)
+  const fetchTasks = useTaskStore((s) => s.fetchTasks)
   const tasks = useTaskStore((s) => s.tasks)
 
   useEffect(() => {
-    if (sessions.length === 0) {
-      loadMockSessions()
-    }
+    fetchSessions()
+    fetchTasks()
   }, [])
 
   useEffect(() => {
-    fetchInsights(tasks)
+    if (tasks.length > 0 || sessions.length > 0) {
+      fetchInsights(tasks)
+    }
   }, [tasks])
 
   return (

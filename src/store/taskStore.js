@@ -1,50 +1,75 @@
 import { create } from 'zustand'
-
-const generateId = () => Math.random().toString(36).substr(2, 9)
-
-const initialTasks = [
-  { id: generateId(), title: 'Set up JWT authentication', description: 'Implement JWT token generation and validation with refresh token rotation', status: 'DONE', priority: 1, complexity: 'HIGH', deadline: '2026-04-28T23:59:00Z', estimatedHrs: 8, actualHrs: 6.5, projectTag: 'DevPulse', createdAt: '2026-04-20T10:00:00Z' },
-  { id: generateId(), title: 'Build session tracking API', description: 'Event-sourced session CRUD with start/stop/pause/resume', status: 'DONE', priority: 1, complexity: 'HIGH', deadline: '2026-04-30T23:59:00Z', estimatedHrs: 12, actualHrs: 10, projectTag: 'DevPulse', createdAt: '2026-04-21T10:00:00Z' },
-  { id: generateId(), title: 'WebSocket real-time timer', description: 'STOMP WebSocket for live session timer broadcast', status: 'IN_PROGRESS', priority: 2, complexity: 'MEDIUM', deadline: '2026-05-05T23:59:00Z', estimatedHrs: 6, actualHrs: null, projectTag: 'DevPulse', createdAt: '2026-04-25T10:00:00Z' },
-  { id: generateId(), title: 'Redis caching layer', description: 'Cache dashboard stats with TTL and invalidation on session changes', status: 'IN_PROGRESS', priority: 2, complexity: 'MEDIUM', deadline: '2026-05-06T23:59:00Z', estimatedHrs: 5, actualHrs: null, projectTag: 'DevPulse', createdAt: '2026-04-26T10:00:00Z' },
-  { id: generateId(), title: 'Focus score ML model', description: 'Train logistic regression on session features to predict focus quality', status: 'TODO', priority: 2, complexity: 'HIGH', deadline: '2026-05-10T23:59:00Z', estimatedHrs: 10, actualHrs: null, projectTag: 'ML Pipeline', createdAt: '2026-04-28T10:00:00Z' },
-  { id: generateId(), title: 'Burnout detection service', description: 'Rolling 7-day window analysis with rule-based + RF classifier', status: 'TODO', priority: 3, complexity: 'HIGH', deadline: '2026-05-12T23:59:00Z', estimatedHrs: 8, actualHrs: null, projectTag: 'ML Pipeline', createdAt: '2026-04-28T10:00:00Z' },
-  { id: generateId(), title: 'React analytics dashboard', description: 'Line charts, bar charts, heatmap with Recharts', status: 'TODO', priority: 2, complexity: 'MEDIUM', deadline: '2026-05-08T23:59:00Z', estimatedHrs: 8, actualHrs: null, projectTag: 'DevPulse', createdAt: '2026-04-29T10:00:00Z' },
-  { id: generateId(), title: 'Docker Compose setup', description: 'Multi-service compose with PostgreSQL, Redis, backend, ML, frontend', status: 'TODO', priority: 3, complexity: 'LOW', deadline: '2026-05-15T23:59:00Z', estimatedHrs: 3, actualHrs: null, projectTag: 'DevPulse', createdAt: '2026-04-30T10:00:00Z' },
-  { id: generateId(), title: 'API rate limiting', description: 'Implement token bucket rate limiter with Redis', status: 'TODO', priority: 4, complexity: 'MEDIUM', deadline: '2026-05-18T23:59:00Z', estimatedHrs: 4, actualHrs: null, projectTag: 'API Gateway', createdAt: '2026-05-01T10:00:00Z' },
-  { id: generateId(), title: 'Write integration tests', description: 'Spring Boot integration tests with TestContainers', status: 'TODO', priority: 3, complexity: 'MEDIUM', deadline: '2026-05-20T23:59:00Z', estimatedHrs: 6, actualHrs: null, projectTag: 'DevPulse', createdAt: '2026-05-01T10:00:00Z' },
-]
+import { api } from '../api/client'
 
 export const useTaskStore = create((set, get) => ({
-  tasks: initialTasks,
+  tasks: [],
+  isLoading: false,
+  error: null,
 
-  addTask: (task) => {
-    const newTask = {
-      id: generateId(),
-      ...task,
-      status: task.status || 'TODO',
-      priority: task.priority || 3,
-      complexity: task.complexity || 'MEDIUM',
-      createdAt: new Date().toISOString(),
-      actualHrs: null,
+  fetchTasks: async (filters = {}) => {
+    set({ isLoading: true, error: null })
+    try {
+      let url = '/api/tasks?'
+      if (filters.status) url += `status=${filters.status}&`
+      if (filters.priority) url += `priority=${filters.priority}&`
+      
+      const tasks = await api.get(url)
+      set({ tasks: tasks || [], isLoading: false })
+    } catch (err) {
+      set({ error: err.message, isLoading: false })
     }
-    set((state) => ({ tasks: [...state.tasks, newTask] }))
   },
 
-  updateTask: (id, updates) => {
-    set((state) => ({
-      tasks: state.tasks.map((t) => (t.id === id ? { ...t, ...updates } : t)),
-    }))
+  addTask: async (taskData) => {
+    try {
+      const newTask = await api.post('/api/tasks', taskData)
+      set((state) => ({ tasks: [...state.tasks, newTask] }))
+      return newTask
+    } catch (err) {
+      set({ error: err.message })
+      throw err
+    }
   },
 
-  deleteTask: (id) => {
-    set((state) => ({ tasks: state.tasks.filter((t) => t.id !== id) }))
+  updateTaskStatus: async (taskId, newStatus) => {
+    try {
+      const updatedTask = await api.patch(`/api/tasks/${taskId}/status`, { status: newStatus })
+      set((state) => ({
+        tasks: state.tasks.map((t) => (t.id === taskId ? updatedTask : t)),
+      }))
+    } catch (err) {
+      set({ error: err.message })
+      throw err
+    }
   },
 
-  moveTask: (id, newStatus) => {
-    set((state) => ({
-      tasks: state.tasks.map((t) => (t.id === id ? { ...t, status: newStatus } : t)),
-    }))
+  updateTask: async (taskId, updates) => {
+    try {
+      const updatedTask = await api.put(`/api/tasks/${taskId}`, updates)
+      set((state) => ({
+        tasks: state.tasks.map((t) => (t.id === taskId ? updatedTask : t)),
+      }))
+    } catch (err) {
+      set({ error: err.message })
+      throw err
+    }
+  },
+
+  deleteTask: async (taskId) => {
+    try {
+      await api.delete(`/api/tasks/${taskId}`)
+      set((state) => ({
+        tasks: state.tasks.filter((t) => t.id !== taskId),
+      }))
+    } catch (err) {
+      set({ error: err.message })
+      throw err
+    }
+  },
+
+  moveTask: async (id, newStatus) => {
+    // This maps exactly to updateTaskStatus
+    return get().updateTaskStatus(id, newStatus)
   },
 
   getTasksByStatus: (status) => {
